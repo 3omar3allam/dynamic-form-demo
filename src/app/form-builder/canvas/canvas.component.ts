@@ -19,21 +19,18 @@ export class CanvasComponent implements OnInit {
 
   ngOnInit(): void {
     this.fbs.fieldCreated$.subscribe(data => {
-      console.log('index: ', data.index);
-      console.log("added: ", JSON.stringify(data.field));
-      const index = data.index ?? this.fields.length;
-      this.fields.splice(index, 0, data.field);
+      console.log(data.field);
+      if (data.index != null && this.fields[data.index]) {
+        this.fields[data.index] = data.field;
+      } else {
+        this.fields.push(data.field)
+      }
     });
   }
 
   drop(event: CdkDragDrop<FieldBase<any>[]>) {
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
-    }
-    else {
-      let controlType:any = event.previousContainer.data[event.previousIndex];
-      console.log(event.currentIndex);
-      this.fbs.openSettings(controlType, event.currentIndex);
     }
   }
 }

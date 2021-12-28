@@ -2,7 +2,15 @@ import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subject } from 'rxjs';
+import { FieldBase } from 'src/app/field-base';
 import { FormBuilderService } from '../form-builder-service';
+import { FieldSettingsValidators } from './field-settings.validators';
+
+export interface FieldSettingsOptions {
+  controlType: string,
+  index?: number | null,
+  fieldToEdit?: FieldBase<any> | null
+}
 
 @Component({
   selector: 'app-field-settings',
@@ -12,11 +20,12 @@ import { FormBuilderService } from '../form-builder-service';
 export class FieldSettingsComponent implements OnInit, OnDestroy {
   controlType!: string;
   form!: FormGroup;
+  edit = false;
   private unsubscribeAll$ = new Subject<void>();
   constructor(
     private fb: FormBuilder,
     private fbs: FormBuilderService,
-    @Inject(MAT_DIALOG_DATA) private data: any,
+    @Inject(MAT_DIALOG_DATA) private data: FieldSettingsOptions,
   ) {
 
   }
@@ -31,6 +40,10 @@ export class FieldSettingsComponent implements OnInit, OnDestroy {
     }
     this.controlType = this.data.controlType;
     this.initForm();
+    if (this.data.fieldToEdit) {
+      this.form.patchValue(this.data.fieldToEdit);
+      this.edit = true;
+    }
   }
 
   ngOnDestroy(): void {
@@ -41,7 +54,12 @@ export class FieldSettingsComponent implements OnInit, OnDestroy {
   onSubmit(event: Event) {
     event.preventDefault();
     if (this.form.invalid) return;
-    this.fbs.createNewField(this.form.getRawValue());
+    if (this.data.fieldToEdit) {
+      this.fbs.editField(this.form.getRawValue(), this.data.index ?? null);
+    }
+    else {
+      this.fbs.createNewField(this.form.getRawValue());
+    }
   }
 
   private initForm() {
@@ -54,6 +72,8 @@ export class FieldSettingsComponent implements OnInit, OnDestroy {
       options: this.fb.array([]),
       value: [''],
       width: ['100%', Validators.required],
+    }, {
+      validators: [FieldSettingsValidators.customValidators()]
     });
   }
 }

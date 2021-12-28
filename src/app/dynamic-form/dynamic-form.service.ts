@@ -9,7 +9,7 @@ export class DynamicFormService {
   // TODO: get from a remote source of question metadata
   getFields() {
 
-    const questions: FieldBase<string>[] = [
+    const fields: FieldBase<string>[] = [
 
       // new DropdownField({
       //   key: 'brave',
@@ -36,13 +36,13 @@ export class DynamicFormService {
       // })
     ];
 
-    return of(questions);
+    return of(fields);
   }
 
-  toFormGroup(questions: FieldBase<string>[] ) {
+  toFormGroup(fields: FieldBase<string>[] ) {
     const group: any = {};
 
-    questions.forEach(question => {
+    fields.forEach(question => {
       group[question.key] = question.required ? new FormControl(question.value || '', Validators.required)
                                               : new FormControl(question.value || '');
     });

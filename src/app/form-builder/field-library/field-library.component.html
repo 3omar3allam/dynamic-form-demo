@@ -2,14 +2,13 @@
   <h2>Components</h2>
 
   <div
-    class="drag-drop-list drag-list"
-    cdkDropList
-    #originList="cdkDropList"
-    [cdkDropListData]="list"
-    [cdkDropListConnectedTo]="[destinationList]"
+    class="list-group"
   >
-    <div class="drag-drop-box" *ngFor="let item of list" cdkDrag>
-      {{ item }}
+    <div class="list-group-item d-flex justify-content-between align-items-center" *ngFor="let item of list">
+      <span>
+        {{ item }}
+      </span>
+      <button class="btn m-0 p-0" (click)="openSettings(item)">&plus;</button>
     </div>
   </div>
 </div>

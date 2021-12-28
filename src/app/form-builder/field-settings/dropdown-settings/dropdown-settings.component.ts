@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-dropdown-settings',
@@ -8,9 +8,31 @@ import { FormGroup } from '@angular/forms';
 })
 export class DropdownSettingsComponent implements OnInit {
   @Input() form!: FormGroup;
-  constructor() { }
+  optionForm!: FormGroup;
+  constructor(private fb: FormBuilder) { }
 
-  ngOnInit(): void {
+  get options(): FormArray {
+    return this.form.get('options') as FormArray;
   }
 
+  ngOnInit(): void {
+    this.optionForm = this.fb.group({
+      key: ['', Validators.required],
+      value: ['', Validators.required],
+    });
+  }
+
+  addOption() {
+    if (this.optionForm.invalid) return;
+    const {key, value} = this.optionForm.getRawValue();
+    this.options.push(this.fb.group({
+      key: [key, Validators.required],
+      value: [value, Validators.required],
+    }));
+    this.optionForm.reset();
+  }
+
+  deleteOptions(index: number) {
+    this.options.controls.splice(index, 1);
+  }
 }

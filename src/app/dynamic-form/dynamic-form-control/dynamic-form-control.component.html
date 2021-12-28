@@ -3,25 +3,46 @@
   appearance="outline"
   [ngStyle]="{ width: field.width }"
 >
-  <mat-label [attr.for]="field.key">{{ field.label }}</mat-label>
   <ng-container [ngSwitch]="field.controlType">
-    <input
-      *ngSwitchCase="'textbox'"
-      matInput
-      [formControlName]="field.key"
-      [id]="field.key"
-      [type]="field.type"
-    />
+    <ng-container *ngSwitchCase="'textbox'">
+      <mat-label [attr.for]="field.key">{{ field.label }}</mat-label>
+      <input
+        matInput
+        [formControlName]="field.key"
+        [id]="field.key"
+        [type]="field.type"
+      />
+    </ng-container>
 
-    <mat-select
-      *ngSwitchCase="'dropdown'"
-      [id]="field.key"
-      [formControlName]="field.key"
-    >
-      <mat-option *ngFor="let opt of field.options" [value]="opt.key">
-        {{ opt.value }}
-      </mat-option>
-    </mat-select>
+    <ng-container *ngSwitchCase="'dropdown'">
+      <mat-label [attr.for]="field.key">{{ field.label }}</mat-label>
+      <mat-select [id]="field.key" [formControlName]="field.key">
+        <mat-option *ngFor="let opt of field.options" [value]="opt.key">
+          {{ opt.value }}
+        </mat-option>
+      </mat-select>
+    </ng-container>
+    <ng-container *ngSwitchCase="'checkbox'">
+      <input matInput [hidden]="true" />
+      <mat-checkbox [id]="field.key" [formControlName]="field.key">
+        <mat-label [attr.for]="field.key">{{ field.label }}</mat-label>
+      </mat-checkbox>
+    </ng-container>
+    <ng-container *ngSwitchCase="'radio'">
+      <input matInput [hidden]="true" />
+      <mat-label [attr.for]="field.key">{{ field.label }}</mat-label>
+      <mat-radio-group
+        [id]="field.key"
+        [formControlName]="field.key"
+        class="p-3"
+      >
+        <div class="d-flex flex-column">
+          <mat-radio-button *ngFor="let opt of field.options" [value]="opt.key">
+            {{ opt.value }}
+          </mat-radio-button>
+        </div>
+      </mat-radio-group>
+    </ng-container>
   </ng-container>
 </mat-form-field>
 <div style="font-size: 0.7rem; color: red;" *ngIf="!isValid">

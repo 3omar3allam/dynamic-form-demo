@@ -1,5 +1,5 @@
-<h1 mat-dialog-title>New {{ controlType }}</h1>
-<div>
+<h1 mat-dialog-title>{{ edit ? 'Edit' : 'New' }} {{ controlType }}</h1>
+<div mat-dialog-content>
   <form [formGroup]="form" #localForm="ngForm" (submit)="onSubmit($event)">
     <div class="row">
       <div class="col-6">
@@ -14,7 +14,7 @@
           <input matInput formControlName="label" />
         </mat-form-field>
       </div>
-      <div class="col-6">
+      <div [hidden]="controlType == 'checkbox'" class="col-6">
         <mat-checkbox formControlName="required">
           <mat-label>Required</mat-label>
         </mat-checkbox>
@@ -23,7 +23,6 @@
         <mat-form-field>
           <mat-label>Width</mat-label>
           <mat-select formControlName="width">
-            <mat-option value="33%">33%</mat-option>
             <mat-option value="50%">50%</mat-option>
             <mat-option value="100%">100%</mat-option>
           </mat-select>
@@ -39,6 +38,14 @@
             [form]="form"
             *ngSwitchCase="'dropdown'"
           ></app-dropdown-settings>
+          <app-checkbox-settings
+            [form]="form"
+            *ngSwitchCase="'checkbox'"
+          ></app-checkbox-settings>
+          <app-dropdown-settings
+            [form]="form"
+            *ngSwitchCase="'radio'"
+          ></app-dropdown-settings>
         </ng-container>
       </div>
     </div>
@@ -50,7 +57,7 @@
         color="primary"
         type="submit"
       >
-        Add
+        {{ edit ? 'Save' : 'Add' }}
       </button>
     </mat-dialog-actions>
   </form>

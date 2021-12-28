@@ -12,11 +12,11 @@
     <div
       [ngStyle]="{width: item.width}"
       class="drag-drop-box"
-      *ngFor="let item of fields"
+      *ngFor="let item of fields; let i = index"
       cdkDrag
       cdkDragBoundary="#done-list"
     >
-      <app-field-preview style="width: 100%;" [field]="item"></app-field-preview>
+      <app-field-preview style="width: 100%;" [field]="item" [index]="i"></app-field-preview>
     </div>
   </div>
 

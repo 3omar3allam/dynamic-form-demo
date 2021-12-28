@@ -1,1 +1,67 @@
-<p>dropdown-settings works!</p>
+<div class="row align-items-end" [formGroup]="optionForm">
+  <div class="col-4">
+    <mat-form-field>
+      <mat-label>Key</mat-label>
+      <input matInput formControlName="key" />
+    </mat-form-field>
+  </div>
+  <div class="col-4">
+    <mat-form-field>
+      <mat-label>Value</mat-label>
+      <input matInput formControlName="value" />
+    </mat-form-field>
+  </div>
+  <div class="col-4">
+    <button
+      class="btn"
+      type="button"
+      [disabled]="optionForm.invalid"
+      (click)="addOption()"
+    >
+      Add Option
+    </button>
+  </div>
+</div>
+<div class="row" [formGroup]="form">
+  <div class="col-12">
+    <table style="width: 100%;">
+      <thead>
+        <tr>
+          <th>Key</th>
+          <th>Value</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container formArrayName="options">
+          <tr *ngFor="let option of options.controls; let i = index">
+            <td>{{ option.get('key')?.value }}</td>
+            <td>{{ option.get('value')?.value }}</td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="deleteOptions(i)"
+              >
+                delete
+              </button>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-12">
+    <mat-form-field [formGroup]="form">
+      <mat-label>Default Value</mat-label>
+      <mat-select formControlName="value">
+        <mat-option
+          *ngFor="let option of options.controls"
+          [value]="option.get('key')!.value"
+        >
+          {{ option.get('value')!.value }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>

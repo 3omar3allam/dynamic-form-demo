@@ -10,6 +10,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { AppComponent } from './app.component';
 import { DynamicFormComponent } from './dynamic-form/dynamic-form.component';
@@ -21,6 +22,7 @@ import { DropdownSettingsComponent } from './form-builder/field-settings/dropdow
 import { TextboxSettingsComponent } from './form-builder/field-settings/textbox-settings/textbox-settings.component';
 import { DynamicFormControlComponent } from './dynamic-form/dynamic-form-control/dynamic-form-control.component';
 import { FieldPreviewComponent } from './form-builder/canvas/field-preview/field-preview.component';
+import { CheckboxSettingsComponent } from './form-builder/field-settings/checkbox-settings/checkbox-settings.component';
 
 @NgModule({
   imports: [
@@ -36,6 +38,7 @@ import { FieldPreviewComponent } from './form-builder/canvas/field-preview/field
     MatDialogModule,
     MatCheckboxModule,
     MatButtonModule,
+    MatRadioModule,
   ],
   declarations: [
     AppComponent,
@@ -47,7 +50,8 @@ import { FieldPreviewComponent } from './form-builder/canvas/field-preview/field
     DropdownSettingsComponent,
     TextboxSettingsComponent,
     DynamicFormControlComponent,
-    FieldPreviewComponent
+    FieldPreviewComponent,
+    CheckboxSettingsComponent
   ],
   bootstrap: [AppComponent]
 })
