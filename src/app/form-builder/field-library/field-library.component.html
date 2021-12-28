@@ -1,0 +1,15 @@
+<div class="drag-drop-container">
+  <h2>Components</h2>
+
+  <div
+    class="drag-drop-list drag-list"
+    cdkDropList
+    #originList="cdkDropList"
+    [cdkDropListData]="list"
+    [cdkDropListConnectedTo]="[destinationList]"
+  >
+    <div class="drag-drop-box" *ngFor="let item of list" cdkDrag>
+      {{ item }}
+    </div>
+  </div>
+</div>

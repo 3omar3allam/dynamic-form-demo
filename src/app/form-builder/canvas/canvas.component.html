@@ -1,0 +1,31 @@
+<div class="drag-drop-container canvas-container">
+  <h2>Preview</h2>
+  <div
+    class="drag-drop-list drop-list canvas"
+    cdkDropList
+    #destinationList="cdkDropList"
+    [cdkDropListData]="fields"
+    id="done-list"
+    (cdkDropListDropped)="drop($event)"
+    cdkDropListOrientation="vertical"
+  >
+    <div
+      [ngStyle]="{width: item.width}"
+      class="drag-drop-box"
+      *ngFor="let item of fields"
+      cdkDrag
+      cdkDragBoundary="#done-list"
+    >
+      <app-field-preview style="width: 100%;" [field]="item"></app-field-preview>
+    </div>
+  </div>
+
+  <!-- <div
+    cdkDropList
+    #destinationList="cdkDropList"
+    [cdkDropListData]="fields"
+    class="drag-drop-list drop-list canvas"
+    id="done-list"
+    (cdkDropListDropped)="drop($event)"
+  ></div> -->
+</div>

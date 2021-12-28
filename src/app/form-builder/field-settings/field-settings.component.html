@@ -1,0 +1,57 @@
+<h1 mat-dialog-title>New {{ controlType }}</h1>
+<div>
+  <form [formGroup]="form" #localForm="ngForm" (submit)="onSubmit($event)">
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label>Key</mat-label>
+          <input matInput formControlName="key" />
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label>Label</mat-label>
+          <input matInput formControlName="label" />
+        </mat-form-field>
+      </div>
+      <div class="col-6">
+        <mat-checkbox formControlName="required">
+          <mat-label>Required</mat-label>
+        </mat-checkbox>
+      </div>
+      <div class="col-6">
+        <mat-form-field>
+          <mat-label>Width</mat-label>
+          <mat-select formControlName="width">
+            <mat-option value="33%">33%</mat-option>
+            <mat-option value="50%">50%</mat-option>
+            <mat-option value="100%">100%</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <ng-container [ngSwitch]="controlType">
+          <app-textbox-settings
+            [form]="form"
+            *ngSwitchCase="'textbox'"
+          ></app-textbox-settings>
+          <app-dropdown-settings
+            [form]="form"
+            *ngSwitchCase="'dropdown'"
+          ></app-dropdown-settings>
+        </ng-container>
+      </div>
+    </div>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button
+        mat-raised-button
+        [disabled]="form.invalid"
+        color="primary"
+        type="submit"
+      >
+        Add
+      </button>
+    </mat-dialog-actions>
+  </form>
+</div>
